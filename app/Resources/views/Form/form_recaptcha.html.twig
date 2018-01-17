@@ -1,0 +1,21 @@
+{% form_theme form _self %}
+
+{% block genemu_captcha_widget %}
+    <img id="{{ id }}_image" src="{{ src }}" width="{{ width }}" height="{{ height }}" title="{{ name|trans }}" />
+    {# We're putting a link there #}
+    <a id="{{ id }}_refresh">Refresh</a>
+    {{ block("form_widget_simple") }}
+{% endblock %}
+
+{% block genemu_captcha_javascript %}
+    <script type="text/javascript">
+        $(function () {
+            {# Image will be refreshed when the link is clicked #}
+            $('#{{ id }}_refresh').click(function() {
+                $('#{{ id }}_image').attr('src', '{{ path('genemu_captcha_refresh') }}?' + Math.random());
+            });
+        });
+    </script>
+
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,79 @@
+<style>
+    .login_captcha img:hover {
+        cursor: pointer;
+    } 
+</style>
+<script type="text/javascript">
+    $(function () {
+        {# Image will be refreshed when the link is clicked #}
+        $('.login_captcha img').click(function() {
+            $(this).attr('src', '{{ path('genemu_captcha_refresh') }}?' + Math.random());
+        });
+    });
+</script>
+<div class="sign_in_container">
+    <div class="sign_in_menu row">
+        <a href="{{ path('fos_user_security_login') }}" class="sign_in_menu_item l6 m6 s12">
+            Log In
+        </a>
+        <a href="{{ path('fos_user_registration_register') }}" class="sign_in_menu_item l6 m6 s12 sign_in_menu_item_selected">
+            Sign Up
+        </a>
+    </div>
+    <div class="sign_in_header">
+        <h1>Sign Up for Free!</h1>
+    </div>
+    <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+        <div class="red" style="font-size: 14px;
+font-weight: 200;">{{ form_errors(form) }}</div>
+
+        <p class="sign_in_form_item">
+            {{ form_widget(form.username,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Username'}}) }}
+        </p>
+
+         <p class="sign_in_form_item">
+            {{ form_widget(form.fname,{'attr':{'class':'sign_in_form_item_input input','placeholder':'First name'}}) }}
+        </p>
+         <p class="sign_in_form_item">
+            {{ form_widget(form.name,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Name'}}) }}
+        </p>
+
+        <p class="sign_in_form_item">
+            {{ form_widget(form.email,{'attr':{'class':'sign_in_form_item_input input','placeholder':'E-mail'}}) }}
+        </p>
+        <p class="sign_in_form_item">
+            {{ form_widget(form.plainPassword.first,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Password'}}) }}
+        </p>
+        <p class="sign_in_form_item">
+            {{ form_widget(form.plainPassword.second,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Password confirmation'}}) }}
+        </p>
+        <p class="sign_in_form_item">
+            {{ form_widget(form.organisation,{'attr':{'class':'sign_in_form_item_input input','placeholder':'School or organization'}}) }}
+        </p>
+        <p class="sign_in_form_item">
+            {{ form_widget(form.linkdin,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Your Linkidin'}}) }}
+        </p>
+          <p class="sign_in_form_item">
+            {{ form_widget(form.competitions,{'attr':{'class':'sign_in_form_item_input input','placeholder':'competitions (3,5) separated by comma x,y,z'}}) }}
+        </p>
+
+
+
+
+        <div class="select sign_in_form_item_input">
+            {{ form_widget(form.country) }}
+        </div>
+        <!--
+        <p class="sign_in_form_item">
+
+          <input type="text" class="sign_in_form_item_input input" placeholder="Phone number (optional)">
+        </p>
+       
+<!--
+
+         -->
+        <input type="submit" value="Register" class="button button-sm sign_in_action" />
+        {{ form_rest(form) }}
+    </form>
+
+</div>

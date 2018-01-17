@@ -1,0 +1,17 @@
+{% block subject %}
+    {% autoescape false %}
+        {{ 'registration.email.subject'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, 'FOSUserBundle') }}
+    {% endautoescape %}
+{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+        Hello {{ user.username }},
+
+        Please confirm your registration by clicking in the link {{ confirmationUrl }}
+
+        Best regards,
+        IOT Platform.
+        Website: 
+    {% endautoescape %}
+{% endblock %}

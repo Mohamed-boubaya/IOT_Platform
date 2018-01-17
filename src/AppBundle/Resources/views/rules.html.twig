@@ -1,0 +1,48 @@
+{% extends '::template/loggin.html.twig' %}
+{% block title %}
+  Rules
+{% endblock %}
+{% block body %}
+  <div class="sign_in_container">
+    <div class="about_header_container" align="center">
+      <div class="about_header">
+        <img src="{{ asset('img/favicon.png') }}" alt="" class="header_title_img">
+        <h5 class="header_title_text">Capture the <span class="colored">FOSS</span></h5>
+      </div>
+    </div>
+    <div class="sign_in_header">
+      <h1>Rules</h1>
+    </div>
+    <dl class="dl faq">
+      <dt>Rule 1</dt>
+      <dd>The CTF event is open to anyone who wants to participate. All you need is an account at the platform.</dd>
+      <dt>Rule 2</dt>
+      <dd>Each team must have between three and five members.</dd>
+      <dt>Rule 3</dt>
+      <dd>
+        The CTF will be "challenge based" i.e:
+        <ul style="list-style: inside;">
+          <li>The CTF is seperated into small tasks that will be solved individually.</li>
+          <li>The Covered topics are somewhere around crypto, Web security, reverse engineering and Web forencics.</li>
+        </ul>
+      </dd>
+      <dt>Rule 4</dt>
+      <dd>Each task  must be solved using tools that are within the some field. Each task gives a set of points depending on the difficulty.
+        The teams will be ranked based of their scores.</dd>
+      <dt>Rule 5</dt>
+      <dd>The winning team will be the one with the highest score. If two or more teams have the same score, an additional task will be given
+        and the winner will be the quickest to solve it.</dd>
+      <dt>Rule 6</dt>
+      <dd>No Dos/automated scans, cyberattacks, deleting stuff on our servers.</dd>
+      <dt>Rule 7</dt>
+      <dd>If you break the rules we will kick you butt and remove all your points and your team will be excluded.</dd>
+    </dl>
+    <p style="color: #444; margin-top: 15px; font-weight: 300;
+font-size: 13px;" align="right">
+      <span style="font-style: italic;">We are trying our best to give you all a delightful experience. Looking forward to seeing you participate ...</span>
+      <br/>
+      <b>G²FOSS Team.</b>
+    </p>
+  </div>
+
+{% endblock %}

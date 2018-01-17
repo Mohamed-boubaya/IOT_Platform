@@ -1,0 +1,20 @@
+<div class="sign_in_container">
+    <div class="sign_in_header">
+        <h1>Password recovery</h1>
+    </div>
+
+    <p class="about_header_text">
+        Enter the new password.
+    </p>
+    {{ form_start(form) }}
+    <p class="sign_in_form_item">
+        {{ form_widget(form.new.first, { 'attr': {'placeholder': 'New password','class':'sign_in_form_item_input input'} }) }}
+    </p>
+    <p class="sign_in_form_item">
+        {{ form_widget(form.new.second, { 'attr': {'placeholder': 'New password confirmation','class':'sign_in_form_item_input input'} }) }}
+    </p>
+    <input type="submit" value="Reset" class="button button-sm sign_in_action" />
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+</div>

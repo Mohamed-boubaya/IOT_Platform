@@ -1,0 +1,123 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ entreprise.name }}{% endblock %}
+
+{% block stylesheets %}
+  <style>
+    .submission_captcha img {
+    vertical-align: middle;
+        height: 40px;
+        width: 125px;
+        margin-right: 5px;
+    }
+    .submission_captcha img:hover {
+        cursor: pointer;
+    }
+  </style>
+
+  
+{% endblock %}
+
+{% block body %}
+
+        <nav class="navigation">
+            <a href="{{ path('entreprise_list') }}" class="navigation_item">Entreprises</a>
+          
+            <a href="{{ path('entreprise_view', {'slug_entreprise':entreprise.slug}) }}" class="navigation_item">{{ entreprise.name }}</a>
+        </nav>
+       
+
+            
+
+            <style>
+        .item_empty:hover {
+            border: none;
+        }
+    </style>
+    <div class="row profile">
+      
+        <div class="l12 m8 s12 profile_details">
+        <br>
+              <h3 class="page_title">
+                    {{ entreprise.name }}
+              </h3>
+              <br>
+            
+
+
+
+
+            <div class="profile_details_sections">
+                <div class="profile_details_section item">
+                    <h3 class="profile_details_section_title"><i class="fa fa-trophy"></i> Application Domaine</h3>
+                   
+                    <div class="item_empty">
+                        {{ entreprise.applicationDomaine }}
+                      
+                    </div>
+                
+               
+                </div>
+
+                <div class="profile_details_section item">
+                    <h3 class="profile_details_section_title"><i class="fa fa-tasks"></i> Description</h3>
+                   
+                        <div class="item_empty">
+                          {{  entreprise.description }}
+                        </div>
+               
+                    <div class="profile_details_section_content">
+            
+                    </div>
+               
+                </div>
+
+                <div class="profile_details_section item">
+                    <h3 class="profile_details_section_title"><i class="fa fa-map-marker"></i> Email</h3>
+
+                    <div class="profile_details_section_content">
+                        <div class="profile_details_section_content_item">
+                            <span class="profile_details_section_content_item_value_time profile_details_section_content_item_value_time_subscription"><i class="fa fa-clock-o profile_details_section_content_item_value_icon"></i> {{ entreprise.email }} </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="challenge_content">
+                
+               
+                <div class="projet_description_more row">
+                    <dl class="task_description_more_left l6 m6 s12">
+       
+                        <dt class="task_description_more_title">Created At</dt>
+                        <dd class="task_description_more_content">{{ entreprise.createdAt|date('d/m/Y')  }}</dd>
+                    </dl>
+               
+                </div>
+
+               
+            </div>
+
+<div class="challenge_actions">
+           
+             
+    
+                    {% if app.user is not null and is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('entreprise_edit', {'slug':entreprise.slug}) }}" class="button button-sm challenge_actions_item profile_edit_action">Edit</a>
+                    {% endif %}
+              
+             </div>
+            </div>
+        </div>
+
+
+
+
+
+  
+    
+
+
+
+{% endblock %}

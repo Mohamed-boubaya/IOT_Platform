@@ -1,0 +1,63 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ promo.name }}{% endblock %}
+
+{% block body %}
+    <nav class="navigation">
+        <a href="{{ path('promo_list') }}" class="navigation_item">promos</a>
+        <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="navigation_item">{{ promo.name }}</a>
+        <a href="{{ path('promo_edit', {slug: promo.slug}) }}" class="navigation_item">Edit</a>
+    </nav>
+    <h1 class="page_title">
+        {{ promo.name }}
+    </h1>
+
+    <div class="sign_in_container challenge_panel">
+        <nav class="challenge_panel_navigation row">
+            <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l3 m6 s12">
+                Description
+            </a>
+            <a href="{{ path('projet_list', {'slug' : promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l3 m6 s12">
+                Projets
+            </a>
+            <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l3 m6 s12">
+                Ranking
+            </a>
+            <a href="submissions.html" class="sign_in_menu_item challenge_panel_navigation_item l3 m6 s12">
+                Submissions
+            </a>
+        </nav>
+        <div class="challenge_content">
+            <div class="sign_in_header">
+                <a href="{{ path('projet_list', {'slug' : promo.slug}) }}" class="page_title_return"><i class="fa fa-arrow-left"></i></a>
+                <h1 style="display: inline-block;">Edit promo</h1>
+            </div>
+            {{ form_start(form,{'attr':{'class':'sign_in_form'}}) }}
+                <p class="sign_in_form_item sign_in_form_item_with_label">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name,{'attr':{'class':'sign_in_form_item_input input','placeholder':'promo title'}}) }}
+                </p>
+                <p class="sign_in_form_item sign_in_form_item_with_label">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description,{'attr':{'class':'textarea','placeholder':'promo description'}}) }}
+                </p>
+                <p class="sign_in_form_item sign_in_form_item_with_label">
+                    {{ form_label(form.startAt) }}
+                    {{ form_widget(form.startAt,{'attr':{'class':'datetime sign_in_form_item_input input','placeholder':'Start date'}}) }}
+                </p>
+                <p class="sign_in_form_item sign_in_form_item_with_label">
+                    {{ form_label(form.endAt) }}
+                    {{ form_widget(form.endAt,{'attr':{'class':'datetime sign_in_form_item_input input','placeholder':'End date'}}) }}
+                </p>
+                <p class="sign_in_form_item sign_in_form_item_with_label">
+                    {{ form_label(form.isPrivate) }}
+                    {{ form_widget(form.isPrivate) }}
+                </p>
+                <p class="sign_in_form_item sign_in_form_item_with_label" align="center">
+                    {{ form_widget(form.Edit,{'attr':{'class':'button button-sm'}}) }}
+                </p>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

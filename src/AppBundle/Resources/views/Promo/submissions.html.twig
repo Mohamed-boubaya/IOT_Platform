@@ -1,0 +1,86 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ promo.name }}{% endblock %}
+
+{% block body %}
+    <nav class="navigation">
+        <a href="{{ path('promo_list') }}" class="navigation_item">promos</a>
+        <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="navigation_item">{{ promo.name }}</a>
+        <a href="{{ path('promo_submissions', {slug: promo.slug}) }}" class="navigation_item">Submissions</a>
+    </nav>
+    <h1 class="page_title">
+        {{ promo.name }}
+    </h1>
+
+    <div class="sign_in_container promo_panel">
+        <nav class="promo_panel_navigation row">
+                <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item  promo_panel_navigation_item l3 m6 s12">
+                    Description
+                </a>
+                <a href="{{ path('task_list', {'slug' : promo.slug}) }}" class="sign_in_menu_item promo_panel_navigation_item l3 m6 s12">
+                    Tasks
+                </a>
+                <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="sign_in_menu_item promo_panel_navigation_item l3 m6 s12">
+                    Ranking
+                </a>
+                <a href="{{ path('promo_submissions', {slug: promo.slug}) }}" class="sign_in_menu_item promo_panel_navigation_item sign_in_menu_item_selected l3 m6 s12">
+                    Submissions
+                </a>
+        </nav>
+        <div class="submissions">
+
+
+            <div class="tasks_header">
+                Submissions list
+            </div>
+            {% for submission in submissions %}
+                <div class="item tasks_item submission_item">
+                <span class="tasks_item_action">
+                    {% if submission.response %}
+
+                        <i class="fa fa-check-circle colored"></i>
+                    {% else %}
+
+                        <i class="fa fa-times-circle red"></i>
+                    {% endif %}
+                </span>
+                <span class="item_avatar item_avatar_icon item_avatar_icon_system">
+                  {% if submission.task.categories and submission.task.categories|length>0  %}
+                    <i class="fa fa-{{ submission.task.categories[0].icon }}"></i>
+                    {% else %}
+                      <i class="fa fa-wrench"></i>
+                    {% endif %}
+                </span>
+                    <div class="tasks_item_content submissions_item_content">
+                        <h3 class="tasks_item_name truncate">
+                            <a href="{{ path('task_view',{'slug':promo.name,'slug_task':submission.task.name}) }}">{{ submission.task.name }}</a>
+                        </h3>
+                        <div class="tasks_item_information">
+                            <div class="tasks_item_information_item">
+                                <i class="fa fa-clock-o"></i> {{ submission.createdAt|date }}
+                            </div>
+                            {% if submission.response %}
+                            <div class="tasks_item_information_item colored">
+                                {% set n = submission.response.task.responses|length %}
+                                <i class="fa fa-trophy"></i> {{ submission.response.task.score / n}}
+                            </div>
+                                {% else %}
+                                    <div class="tasks_item_information_item">
+                                        <i class="fa fa-trophy"></i> 0 pts
+                                    </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            {% else %}
+                    <div class="item tasks_item item_empty">
+                        No entries were found.
+                    </div>
+            {% endfor %}
+
+
+
+        </div>
+    </div>
+{% endblock %}

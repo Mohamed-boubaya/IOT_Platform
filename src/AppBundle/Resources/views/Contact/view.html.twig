@@ -1,0 +1,55 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}Contacts List{% endblock %}
+
+{% block body %}
+    <style>
+        dt{
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+
+        dd {
+            margin-bottom: 12px;
+            font-size: 13.5px;
+            color; #575757;
+        }
+
+        dd:last-child {
+            margin: 0;
+        }
+        dl {
+            color: rgb(51, 51, 51);
+            font-size: 15px;
+        }
+    </style>
+    <h1 class="page_title">
+        <a href="{{ path('contacts') }}" class="page_title_return"><i class="fa fa-arrow-left"></i></a>
+        Contacts
+    </h1>
+    <div class="challenges">
+            <div class="item ">
+
+                <dl>
+                    <dt><i class="fa fa-user"></i>
+                         Sender</dt>
+                    <dd>{{ contact.sender }}</dd>
+                    <dt><i class="fa fa-university"></i>
+                         Organisation or institution</dt>
+                    <dd>{{ contact.organisation }}</dd>
+                    <dt><i class="fa fa-envelope"></i>
+                        E-mail</dt>
+                    <dd><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></dd>
+                    <dt><i class="fa fa-phone"></i>
+                        Phone number</dt>
+                    <dd>{{ contact.phone }}</dd>
+                    <dt><i class="fa fa-tag"></i>
+                        Subject</dt>
+                    <dd>{{ contact.subject }}</dd>
+                    <dt><i class="fa fa-pencil"></i>
+                        Message</dt>
+                    <dd>{{ contact.message }}</dd>
+                </dl>
+            </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}promos List{% endblock %}
+
+{% block body %}
+ {% if app.user is not null and is_granted('ROLE_ADMIN') %}                          
+<div class="tasks_actions_order l6 m12 s12">          
+  <nav class="navigation">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+        <a href="{{ path('promo_new') }}" class="navigation_item">New</a>
+
+    </nav>
+</div>
+ {% endif %}
+    <h1 class="page_title">
+      ALL  promos IOT
+    </h1>
+    <div class="promos">
+        <form>
+        <div class="tasks_actions row">
+            <div class="tasks_actions_filter l6 m12 s12">
+                <label class="ranking_filter_label">Filter by:</label>
+                <select class="inline-select" name="filter">
+                    {% if (not(app.request.query.has('filter'))) or (app.request.query.get('filter')=="all") or (app.request.query.get('filterValue')=="") %}
+                        <option value="all" onclick="document.getElementById('filterValue').value=''; this.form.submit()" selected="selected">Tout</option>
+                        <option value="name">promo name</option>
+                    {% else %}
+                        <option value="all" onclick="document.getElementById('filterValue').value=''; this.form.submit()">Tout</option>
+                        <option value="name" selected="selected">promo name</option>
+                    {% endif %}
+                </select>
+                {% if (app.request.query.has('filterValue')) and (app.request.query.get('filterValue')!="") %}
+                    <input type="text" class="ranking_filter_input input-bordered" placeholder="Find a promo by name" name="filterValue" id="filterValue" value="{{ app.request.query.get('filterValue') }}">
+                {% else %}
+                    <input type="text" class="ranking_filter_input input-bordered" placeholder="Find a promo by name" name="filterValue" id="filterValue">
+                {% endif %}
+            </div>
+            <div class="tasks_actions_order l6 m12 s12">
+                <label class="ranking_filter_label">Order by:</label>
+                <select class="inline-select" name="order" onchange="this.form.submit();">
+                    {% if (not app.request.query.has('order')) or (app.request.query.get('order')=="name") %}
+                        <option value="name" selected="selected">promo name</option>
+                        <option value="createdAt">Start date</option>
+                        <option value="endAt">End date</option>
+                    {% elseif (app.request.query.get('order')=="createdAt") %}
+                        <option value="name">promo name</option>
+                        <option value="createdAt" selected="selected">Start date</option>
+                        <option value="endAt">End date</option>
+                    {% else %}
+                        <option value="name">promo name</option>
+                        <option value="createdAt">Start date</option>
+                        <option value="endAt" selected="selected">End date</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        </form>
+        <div class="items_state row">
+            <div class="items_state_count l6 m6 s12">
+                Total: {{ promos | length }} promos
+            </div>
+            <div class="items_state_pagination l6 m6 s12">
+                Page 1 of 1
+            </div>
+        </div>
+
+
+
+        {% for promo in promos %}
+        <a class="item challenges_item" href="{{ path('promo_view', {slug: promo.slug}) }}">
+            <h3 class="challenges_item_title">
+                {{ promo.name }}
+            </h3>
+
+            <p class="challenges_item_description description">
+                {{ promo.description | truncate(150, true) }}
+            </p>
+            <i class="description promos_item_description_state">
+                <span class="challenges_item_description_state_item challenges_item_description_state_privacy">
+                    {% if promo.isPrivate %}
+                    <i class="fa fa-lock"></i> Private
+                    {% else %}
+                    <i class="fa fa-globe"></i> Public
+                    {% endif %}
+                </span>
+
+                {% if date(promo.startAt) > date() %}
+                    <time class="challenges_item_description_state_item"><i class="fa fa-clock-o"></i>
+                        {#Start at {{ promo.startAt | date('d M Y') }}#}
+                        Start {{ promo.startAt | time_diff }}
+                    </time>
+                {% elseif date(promo.endAt) < date() %}
+                    <time class="promos_item_description_state_item"><i class="fa fa-calendar-times-o"></i>
+                        {#End at {{ promo.endAt | date('d M Y') }}#}
+                        Ended {{ promo.endAt | time_diff }}
+                    </time>
+                {% else %}
+                    <time class="challenges_item_description_state_item"><i class="fa fa-clock-o"></i>
+                        {#Start at {{ promo.startAt | date('d M Y') }}#}
+                        Started {{ promo.startAt | time_diff }}
+                    </time>
+                    <time class="challenges_item_description_state_item"><i class="fa fa-calendar-times-o"></i>
+                        {#End at {{ promo.endAt | date('d M Y') }}#}
+                        End {{ promo.endAt | time_diff }}
+                    </time>
+                {% endif %}
+
+                {#<time class="challenges_item_description_state_item"><i class="fa fa-clock-o"></i>#}
+                    {#&#123;&#35;Start at {{ promo.startAt | date('d M Y') }}&#35;&#125;#}
+                    {#Start {{ promo.startAt | time_diff }}#}
+                {#</time>#}
+                {#<time class="challenges_item_description_state_item"><i class="fa fa-calendar-times-o"></i>#}
+                    {#&#123;&#35;End at {{ promo.endAt | date('d M Y') }}&#35;&#125;#}
+                    {#End {{ promo.endAt | time_diff }}#}
+                {#</time>#}
+            </i>
+            {% if date(promo.startAt) > date() %}
+                <span class="challenges_item_description_state_item challenges_item_description_state_disponibility challenges_item_description_state_disponibility_coming">
+                    <i class="fa fa-circle challenges_item_description_state_disponibility_coming"></i> Coming
+                </span>
+            {% elseif date(promo.endAt) < date() %}
+                <span class="challenges_item_description_state_item challenges_item_description_state_disponibility challenges_item_description_state_disponibility_ended">
+                    <i class="fa fa-circle"></i> Ended
+                </span>
+            {% else %}
+                <span class="challenges_item_description_state_item challenges_item_description_state_disponibility challenges_item_description_state_disponibility_active">
+                    <i class="fa fa-circle"></i> Active
+                </span>
+            {% endif %}
+           
+        
+
+        </a>
+        {% else %}
+        <div class="item tasks_item item_empty">
+               No entries were found.
+        </div>
+            {#{% if is_granted("ROLE_promo_VIEW", promo) %}#}
+            {#<a href="{{ path('promo_view', {slug: promo.slug}) }}">En savoir plus</a>#}
+            {#<a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}">Scoreboard</a>#}
+            {#{% endif %}#}
+
+            {#{% if is_granted("ROLE_USER") %}#}
+            {#<a href="{{ path('promo_participate', {slug: promo.slug}) }}">Participate</a>#}
+            {#{% endif %}#}
+
+            {#{% if app.user is not null and is_granted("ROLE_ADMIN") %}#}
+            {#<a href="{{ path('promo_edit',{slug: promo.slug}) }}">Edit</a>#}
+            {#<a href="{{ path('promo_delete',{slug: promo.slug}) }}">Delete</a>#}
+            {#{% endif %}#}
+        {% endfor %}
+    </div>
+{% endblock %}

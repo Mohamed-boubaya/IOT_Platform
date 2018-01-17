@@ -1,0 +1,35 @@
+{% extends '::template/loggin.html.twig' %}
+{% block title %}
+  FAQ
+{% endblock %}
+{% block body %}
+<div class="sign_in_container">
+        <div class="about_header_container" align="center">
+          <div class="about_header">
+            <img src="{{ asset('img/favicon.png') }}" alt="" class="header_title_img">
+            <h5 class="header_title_text">IOT Platfrom<span class="colored"> ENIT</span></h5>
+          </div>
+        </div>
+        <div class="sign_in_header">
+          <h1>Frequently asked questions (FAQ)</h1>
+        </div>
+          <dl class="dl faq">
+            <dt>Question 1</dt>
+            <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet dapibus augue. Vivamus vehicula at sem sit amet lobortis. Proin lacinia euismod dolor eget semper. Sed pulvinar, est a posuere auctor, mi eros malesuada velit, a sollicitudin turpis nulla a diam. Phasellus fermentum magna et magna pharetra, ut tincidunt arcu congue. Duis porta fermentum nisi, mattis vestibulum massa interdum vel. Pellentesque habitant morbi tristique senectu</dd>
+            <dt>Question 2</dt>
+            <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet dapibus augue. Vivamus vehicula at sem sit amet lobortis. Proin lacinia euismod dolor eget semper. Sed pulvinar, est a posuere auctor, mi eros malesuada velit, a sollicitudin turpis nulla a diam. Phasellus fermentum magna et magna pharetra, ut tincidunt arcu congue. Duis porta fermentum nisi, mattis vestibulum massa interdum vel. Pellentesque habitant morbi tristique senectu</dd>
+            <dt>Question 3</dt>
+            <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet dapibus augue. Vivamus vehicula at sem sit amet lobortis. Proin lacinia euismod dolor eget semper. Sed pulvinar, est a posuere auctor, mi eros malesuada velit, a sollicitudin turpis nulla a diam. Phasellus fermentum magna et magna pharetra, ut tincidunt arcu congue. Duis porta fermentum nisi, mattis vestibulum massa interdum vel. Pellentesque habitant morbi tristique senectu</dd>
+            <dt>Question 4</dt>
+            <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet dapibus augue. Vivamus vehicula at sem sit amet lobortis. Proin lacinia euismod dolor eget semper. Sed pulvinar, est a posuere auctor, mi eros malesuada velit, a sollicitudin turpis nulla a diam. Phasellus fermentum magna et magna pharetra, ut tincidunt arcu congue. Duis porta fermentum nisi, mattis vestibulum massa interdum vel. Pellentesque habitant morbi tristique senectu</dd>
+            <dt>Question 5</dt>
+            <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet dapibus augue. Vivamus vehicula at sem sit amet lobortis. Proin lacinia euismod dolor eget semper. Sed pulvinar, est a posuere auctor, mi eros malesuada velit, a sollicitudin turpis nulla a diam. Phasellus fermentum magna et magna pharetra, ut tincidunt arcu congue. Duis porta fermentum nisi, mattis vestibulum massa interdum vel. Pellentesque habitant morbi tristique senectu</dd>
+            <dt>Question 6</dt>
+            <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet dapibus augue. Vivamus vehicula at sem sit amet lobortis. Proin lacinia euismod dolor eget semper. Sed pulvinar, est a posuere auctor, mi eros malesuada velit, a sollicitudin turpis nulla a diam. Phasellus fermentum magna et magna pharetra, ut tincidunt arcu congue. Duis porta fermentum nisi, mattis vestibulum massa interdum vel. Pellentesque habitant morbi tristique senectu</dd>
+          </dl>
+          <div class="sign_in_new_account faq_footer">
+            Still have problems?<br/>
+            <a href="{{ path('contact') }}" class="colored">Contact us</a>
+          </div>
+      </div>
+{% endblock %}

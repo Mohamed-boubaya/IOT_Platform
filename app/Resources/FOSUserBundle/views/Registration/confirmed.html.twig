@@ -1,0 +1,19 @@
+{% extends '::template/loggin.html.twig' %}
+{% block title %}
+    Registration success
+{% endblock %}
+{% block body %}
+    <div class="sign_in_container">
+        <div class="about_header_container" align="center">
+            <div class="about_header">
+                <img src="{{ asset('img/favicon.png') }}" alt="" class="header_title_img">
+                <h5 class="header_title_text">IOT PLATFORM <span class="colored">ENIT</span></h5>
+            </div>
+        </div>
+        <div class="sign_in_header">
+            <h1>Congratulation!</h1>
+        </div>
+        <p class="about_header_text" align="center">{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+        <a  class="button sign_in_action" href="{{ path('fos_user_profile_show') }}">Profile</a>
+    </div>
+{% endblock body %}

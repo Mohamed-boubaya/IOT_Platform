@@ -1,0 +1,125 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}STUDENTS{% endblock %}
+
+{% block body %}
+<h1 class="page_title">
+ IOT STUDENTS
+</h1>
+{% set brands = [] %}
+{% for eleve in eleves %}
+{% for competition in eleve.competitions %}
+   {% set brands = brands|merge({(competition):(eleve.id)})%}
+
+ {% endfor %}
+{% endfor %}
+
+
+     <form>
+    <div class="tasks_actions row">
+        <div class="tasks_actions_filter l6 m12 s12">
+            <label class="ranking_filter_label">Filter by:</label>
+
+            <select name="filter" class="inline-select">
+              {% if (not(app.request.query.has('filter'))) or (app.request.query.get('filter')=="all") or (app.request.query.get('filterValue')=="") %}
+                  <option value="all" selected="selected" onclick="document.getElementById('filterValue').value=''; this.form.submit()">Tout</option>
+                  <option value="eleve">eleve name</option>
+                  <option value="country">Country</option>
+                  <option value="organization">Organization</option>
+              {% elseif (app.request.query.get('filter')=="eleve") %}
+                  <option value="all" onclick="document.getElementById('filterValue').value=''; this.form.submit()">Tout</option>
+                <option value="eleve" selected="selected">eleve name</option>
+                <option value="country">Country</option>
+                <option value="organization">Organization</option>
+              {% elseif (app.request.query.get('filter')=="country") %}
+                  <option value="all" onclick="document.getElementById('filterValue').value=''; this.form.submit()">Tout</option>
+                  <option value="eleve">eleve name</option>
+                  <option value="country" selected="selected">Country</option>
+                  <option value="organization">Organization</option>
+              {% else %}
+                  <option value="all" onclick="document.getElementById('filterValue').value=''; this.form.submit()">Tout</option>
+                  <option value="eleve">eleve name</option>
+                  <option value="country">Country</option>
+                  <option value="organization" selected="selected">Organization</option>
+              {% endif %}
+            </select>
+            {% if (app.request.query.has('filterValue')) and (app.request.query.get('filterValue')!="") %}
+                <input type="text" name="filterValue" class="ranking_filter_input input-bordered" placeholder="Find by name" value="{{ app.request.query.get('filterValue') }}" id="filterValue">
+            {% else %}
+                <input type="text" name="filterValue" class="ranking_filter_input input-bordered" placeholder="Find by name" id="filterValue">
+            {% endif %}
+
+        </div>
+      <div class="tasks_actions_order l3 m10 s10">
+            <label class="ranking_filter_label">Competition :</label>
+            <select class="inline-select" name="competition" onchange="this.form.submit();">
+                {% if (not app.request.query.has('competition')) %}
+            {% for key, user  in brands %}
+                    <option value="{{key}}" selected="selected">{{key}}</option>
+                 {% endfor %}
+             
+               {% else %}
+                  {% for key, user  in brands %}
+                    <option value="{{key}}" selected="selected">{{key}}</option>
+                 {% endfor %}
+                {% endif %}
+            </select>
+        </div>        <div class="tasks_actions_order l3 m12 s12">
+            <label class="ranking_filter_label">Order by:</label>
+            <select class="inline-select" name="order" onchange="this.form.submit();">
+                {% if (not app.request.query.has('order')) or (app.request.query.get('order')=="eleve") %}
+                    <option value="eleve" selected="selected">eleve name</option>
+                    <option value="country">Country</option>
+                {% else %}
+                    <option value="eleve">eleve name</option>
+                    <option value="country" selected="selected">Country</option>
+                {% endif %}
+            </select>
+        </div>
+    </div>
+    </form>
+    <div class="items_state row">
+        <div class="items_state_count l6 m6 s12">
+            Total: {{ eleves|length }} eleves
+        </div>
+        <div class="items_state_pagination l6 m6 s12">
+            Page 1 of 1
+        </div>
+    </div>
+    <div class="teams row">
+     {% for eleve in eleves %}
+        <div class="item teams_item l4 m6 s12" href="profile.html">
+            <span class="flag flag-tn teams_item_flag"></span>
+            <img src="{{ asset('img/avatar/') }}{{ eleve.id }}.png" class="item_avatar">
+            <div class="teams_item_content">
+                <div class="teams_item_name truncate">
+                    <a href="{{ path('view_eleve',{'slug':eleve.slug}) }}">{{ eleve.username }}</a>
+                </div>
+                <div class="teams_item_information">
+                    <div class="teams_item_information_item">
+                        <i class="fa fa-trophy"></i> {{ eleve.participations|length }} promo
+                    </div>
+                    <div class="teams_item_information_item">
+                        <i class="fa fa-flag"></i> 0 projet
+                    </div>
+                    <div class="teams_item_information_item">
+                        <i class="fa fa-user"></i> {{ eleve.fname }} {{ eleve.name }}
+                    </div>
+                    <div class="teams_item_information_item">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+         {% else %}
+             <div class="item tasks_item item_empty">
+                 {% if (not app.request.query.has('filterValue')) or (app.request.query.get('filterValue')=="") %}
+                     No entries were found.
+                 {% else %}
+                     No entries were found for "{{ app.request.query.get('filterValue') }}".
+                 {% endif %}
+             </div>
+     {% endfor %}
+
+    </div>
+{% endblock %}

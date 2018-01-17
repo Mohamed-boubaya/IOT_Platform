@@ -1,0 +1,1 @@
+document.querySelector('form').addEventListener('submit', function(e){e.preventDefault(); inputs=document.querySelectorAll('input'); if(inputs[0].value=="password" && inputs[1].value=="username") alert('The flag is the password'); else alert('Bad boy');}, false);

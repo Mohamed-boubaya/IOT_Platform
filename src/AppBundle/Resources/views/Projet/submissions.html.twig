@@ -1,0 +1,85 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ challenge.name }}{% endblock %}
+
+{% block body %}
+    <nav class="navigation">
+        <a href="{{ path('challenge_list') }}" class="navigation_item">Challenges</a>
+        <a href="{{ path('task_list',{'slug':challenge.slug}) }}" class="navigation_item">{{ challenge.name }}</a>
+        <a href="{{ path('task_view', {'slug':challenge.slug, slug_task: task.slug}) }}" class="navigation_item">{{ task.name }}</a>
+        <a href="{{ path('task_submissions', {'slug':challenge.slug, slug_task: task.slug}) }}" class="navigation_item">Submissions</a>
+    </nav>
+    <h1 class="page_title">
+        <a href="{{ path('task_list', {'slug':challenge.slug}) }}" class="page_title_return"><i class="fa fa-arrow-left"></i></a>
+        {{ task.name }}
+    </h1>
+
+    <div class="sign_in_container challenge_panel">
+        <nav class="challenge_panel_navigation row">
+            <a href="{{ path('task_view', {'slug':challenge.slug, slug_task: task.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m12 s12">
+                Task
+            </a>
+            <a href="{{ path('task_discussions', {'slug':challenge.slug, 'task': task.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m6 s12" style="margin-right: 30px;">
+                Discussions
+            </a>
+            <a href="{{ path('task_submissions', {'slug':challenge.slug, slug_task: task.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l4 m6 s12">
+                Submissions
+            </a>
+        </nav>
+        <div class="submissions">
+
+
+            <div class="tasks_header">
+                Submissions list for "<a href="{{ path('task_view', {slug:challenge.slug, slug_task: task.slug}) }}">{{ task.name }}</a>"
+            </div>
+            {% for submission in submissions %}
+                <div class="item tasks_item submission_item">
+                <span class="tasks_item_action">
+                    {% if submission.response %}
+
+                        <i class="fa fa-check-circle colored"></i>
+                    {% else %}
+
+                        <i class="fa fa-times-circle red"></i>
+                    {% endif %}
+                </span>
+                <span class="item_avatar item_avatar_icon item_avatar_icon_system">
+                  {% if submission.task.categories and submission.task.categories|length>0  %}
+                    <i class="fa fa-{{ submission.task.categories[0].icon }}"></i>
+                    {% else %}
+                      <i class="fa fa-wrench"></i>
+                    {% endif %}
+                </span>
+                    <div class="tasks_item_content submissions_item_content">
+                        <h3 class="tasks_item_name truncate">
+                            <a href="{{ path('task_view',{'slug':challenge.name,'slug_task':submission.task.name}) }}">{{ submission.task.name }}</a>
+                        </h3>
+                        <div class="tasks_item_information">
+                            <div class="tasks_item_information_item">
+                                <i class="fa fa-clock-o"></i> {{ submission.createdAt|date }}
+                            </div>
+                            {% if submission.response %}
+                            <div class="tasks_item_information_item colored">
+                                {% set n = submission.response.task.responses|length %}
+                                <i class="fa fa-trophy"></i> {{ submission.response.task.score / n}}
+                            </div>
+                                {% else %}
+                                    <div class="tasks_item_information_item">
+                                        <i class="fa fa-trophy"></i> 0 pts
+                                    </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            {% else %}
+                    <div class="item tasks_item item_empty">
+                        No entries were found.
+                    </div>
+            {% endfor %}
+
+
+
+        </div>
+    </div>
+{% endblock %}

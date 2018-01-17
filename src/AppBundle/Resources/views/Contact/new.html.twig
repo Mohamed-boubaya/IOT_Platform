@@ -1,0 +1,40 @@
+{% extends '::template/loggin.html.twig' %}
+{% block title %}
+Contact
+{% endblock %}
+{% block body %}
+  <div class="sign_in_container">
+    <div class="about_header_container" align="center">
+      <div class="about_header">
+        <img src="{{ asset('img/favicon.png') }}" alt="" class="header_title_img">
+        <h5 class="header_title_text">IOT PLATFORM <span class="colored">ENIT</span></h5>
+      </div>
+    </div>
+    <div class="sign_in_header">
+      <h1>Get in touch!</h1>
+    </div>
+    {{ form_start(form,{'attr':{'class':'sign_in_form'}}) }}
+      <p class="sign_in_form_item">
+        {{ form_widget(form.sender,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Full name'}}) }}
+      </p>
+    <p class="sign_in_form_item">
+      {{ form_widget(form.organisation,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Organisation or institution'}}) }}
+    </p>
+      <p class="sign_in_form_item">
+        {{ form_widget(form.email,{'attr':{'class':'sign_in_form_item_input input','placeholder':'E-mail'}}) }}
+      </p>
+    <p class="sign_in_form_item">
+      {{ form_widget(form.phone,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Phone number'}}) }}
+    </p>
+    <p class="sign_in_form_item">
+      {{ form_widget(form.subject,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Subject'}}) }}
+    </p>
+    <p class="sign_in_form_item">
+      {{ form_widget(form.message,{'attr':{'class':'textarea','placeholder':'Message'}}) }}
+    </p>
+    {{ form_widget(form.send,{'attr':{'class':'button button-sm sign_in_action'}}) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+  </div>
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ promo.name }}{% endblock %}
+{% block stylesheets %}
+<style>
+ .stat_link {
+float: right; color: rgb(179, 179, 179); font-size: 60px;  text-align: center; margin-right: 30px; margin-top: 20px;
+transition: 0.15s;
+     outline: none;
+ }
+.stat_link:hover {
+ color: rgb(0, 161, 99);
+}
+.stat_link_mob {
+    display: none;
+    margin-bottom: 4px;
+}
+ @media screen and (max-width: 767px) {
+     .stat_link {
+         display: none;
+     }
+     .stat_link_mob {
+         display: inline-block;
+     }
+ }
+</style>
+{% endblock %}
+{% block body %}
+
+    <nav class="navigation">
+         {% if app.user is not null and is_granted('ROLE_ADMIN') %}                          
+<div class="tasks_actions_order l6 m12 s12">          
+  <i class="fa fa-envelope" aria-hidden="true">
+        <a href="{{ path('promo_contact', {slug: promo.slug}) }}" class="navigation_item">Send E-maill to All Student</a> </i>
+        <i style="color: red" class="fa fa-minus" aria-hidden="true"> <a href="{{ path('promo_delete', {slug: promo.slug}) }}" class="navigation_item">Delete</a></i> 
+</div>
+ {% endif %}
+        <a href="{{ path('promo_list') }}" class="navigation_item">promos</a>
+        <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="navigation_item">{{ promo.name }}</a>
+    </nav>
+    <h1 class="page_title">
+        {{ promo.name }}
+    </h1>
+
+    <div class="sign_in_container challenge_panel">
+        <nav class="challenge_panel_navigation row">
+            {% if app.user and (is_granted('ROLE_promo_PARTICIPATE', promo) or is_granted('ROLE_ADMIN')) %}
+           {# {% if promo.startAt|date > 'now'|date and not(is_granted('ROLE_ADMIN'))  %}
+                <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected promo_panel_navigation_item l12 m12 s12">
+                    Description
+                </a>
+                {% else %}#}
+                    <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l4 m6 s12">
+                        Description
+                    </a>
+                    <a href="{{ path('projet_list', {'slug' : promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m6 s12">
+                        Projets
+                    </a>
+                    <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m6 s12">
+                        Student
+                    </a>
+                   
+                    {#{% endif %}#}
+            {% else %}
+                {% if promo.startAt|date <= date("now")  %}
+                    <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l6 m6 s12">
+                        Description
+                    </a>
+                    <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l6 m6 s12">
+                              Student
+                    </a>
+                {% else %}
+                        <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l12 m12 s12">
+                            Description
+                        </a>
+                {% endif %}
+            {% endif %}
+        </nav>
+        <div class="promo_content">
+
+            <label class="challenge_title">{{ promo.name }}</label> {% if is_granted('ROLE_promo_PARTICIPATE', promo) %}<font class="colored" style="font-weight: 400; font-size: 12px;"><i class="fa fa-check-circle-o"></i> Registred</font>{% elseif participation != 0 %}<font class="challenges_item_description_state_disponibility_coming" style="font-weight: 400; font-size: 12px;"><i class="fa fa-hourglass-start"></i> Pending confirmation</font>{% endif %}
+            <p class="challenge_description">
+                {{ promo.description }}
+            </p>
+            <dl class="challenge_description_more">
+                <dt class="challenge_description_more_title">State</dt>
+                {% if date(promo.startAt) > date() %}
+                <dd class="challenge_description_more_content challenges_item_description_state_disponibility_coming">
+                    <i class="fa fa-circle"></i> Coming
+                </dd>
+                {% elseif date(promo.endAt) < date() %}
+                <dd class="promo_description_more_content challenges_item_description_state_disponibility_ended">
+                  <i class="fa fa-circle"></i> Ended
+                </dd>
+                {% else %}
+                <dd class="challenge_description_more_content challenges_item_description_state_disponibility_active">
+                    <i class="fa fa-circle"></i> Active
+                </dd>
+                {% endif %}
+                <dt class="challenge_description_more_title">Period</dt>
+                <dd class="challenge_description_more_content">{{ promo.startAt|date('d/m/Y h:s') }} - {{ promo.endAt|date('d/m/Y h:s') }}</dd>
+                <dt class="challenge_description_more_title">Content</dt>
+                <dd class="challenge_description_more_content">
+                    {% if date("now") < promo.startAt|date %}
+                        Not available yet
+                    {% else %}
+                    {{ promo.projets|length }} projet
+                    {% endif %}
+                </dd>
+                <dt class="challenge_description_more_title">Visibility</dt>
+                <dd class="challenge_description_more_content">
+                {% if promo.isPrivate %}
+                    <i class="fa fa-lock"></i> Private
+                {% else %}
+                    <i class="fa fa-globe"></i> Public
+                {% endif %}
+                </dd>
+            </dl>
+            <div class="challenge_actions">
+                
+                <form action="{{ path('promo_participate', {slug: promo.slug}) }}" style="display: inline-block;">
+                    {% if participation == 0 %}
+                    <input type="submit" class="button button-sm promo_actions_item" value="Participate">
+                     {% endif %}
+                    {% if app.user is not null and is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('promo_edit',{'slug':promo.slug}) }}" class="button button-sm challenge_actions_item profile_edit_action">Edit</a>
+                   {% endif %}
+                </form>
+                            </div>
+        </div>
+    </div>
+{% endblock %}

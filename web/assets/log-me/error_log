@@ -1,0 +1,2 @@
+[30-Jan-2016 15:43:26 Europe/Paris] PHP Notice:  Undefined index: PHP_AUTH_USER in /home/gfossorg/public_html/ctf/web/assets/log-me/index.php on line 6
+[30-Jan-2016 15:43:26 Europe/Paris] PHP Notice:  Undefined index: PHP_AUTH_PW in /home/gfossorg/public_html/ctf/web/assets/log-me/index.php on line 7

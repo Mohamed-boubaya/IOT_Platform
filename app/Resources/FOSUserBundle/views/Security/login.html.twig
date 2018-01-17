@@ -1,0 +1,65 @@
+
+{% extends '::template/loggin.html.twig' %}
+{% block title %}
+    Login
+{% endblock %}
+{% block body %}
+
+
+
+    <div class="sign_in_container">
+        <div class="sign_in_menu row">
+            <a href="{{ path('fos_user_security_login') }}" class="sign_in_menu_item sign_in_menu_item_selected l6 m6 s12">
+                Log In
+            </a>
+            <a href="{{ path('fos_user_registration_register') }}" class="sign_in_menu_item l6 m6 s12">
+                Sign Up
+            </a>
+        </div>
+        <div class="sign_in_header">
+            <h1>Welcome Back!</h1>
+        </div>
+        {% if error %}
+            <div class="red" style="font-size: 14px;
+font-weight: 200;">{{ error|trans({}, 'FOSUserBundle') }}</div>
+        {% endif %}
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+
+
+
+
+
+
+
+            <p class="sign_in_form_item">
+                <!--
+                <label for="" class="sign_in_form_item_label">Team Name</label>
+                -->
+                <input type="text" id="username" class="sign_in_form_item_input input" name="_username" value="{{ last_username }}" required="required" placeholder="Team Name"/>
+            </p>
+            <p class="sign_in_form_item">
+                <!--
+                <label for="" class="sign_in_form_item_label">Password</label>
+                -->
+
+                <input type="password" id="password" name="_password" required="required" placeholder="Password"  class="sign_in_form_item_input input"/>
+            </p>
+            <p class="sign_in_secondary_action">
+                <a href="{{ path('fos_user_resetting_request') }}" class="sign_in_secondary_action_forgot">Forgot Password?</a>
+            </p>
+            <!--
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+            -->
+            <input type="submit" id="_submit" name="_submit" value="Sign In" class="button button-sm sign_in_action" />
+        </form>
+        <div class="sign_in_new_account">
+            New user?<br/>
+            <a href="{{ path('fos_user_registration_register') }}" class="colored">Create an account</a>
+        </div>
+    </div>
+
+{% endblock %}

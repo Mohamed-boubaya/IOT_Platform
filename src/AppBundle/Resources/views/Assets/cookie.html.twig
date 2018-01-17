@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <title>{{ task.name }} | CTFOSS</title>
+    <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}" />
+
+
+    <!-- font awesome icons -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
+
+    <!-- Jquery -->
+    <script src="{{ asset('js/jquery-1.11.3.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-migrate-1.2.1.min.js') }}"></script>
+
+    <!-- fonts -->
+    <link href='{{ asset('css/titillium.css') }}' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+
+    <style>
+        .container.containerLogin {
+            padding: 50px 100px;
+            position: relative;
+            min-height: 100%;
+            background: transparent url("{{ asset('img/tasks/jungle.jpg') }}") no-repeat scroll center center / cover;
+        }
+    </style>
+</head>
+<body>
+<div class="container containerLogin" align="center">
+
+
+    <div class="sign_in_container challenge_panel">
+        <h1 class="page_title">
+            {{ task.name }}
+        </h1>
+        <div class="discussion_content">
+            {{ form_start(form) }}
+            <div class="discussion_content_item_comment">
+                <img src="{{ asset('img/avatar/') }}{{ app.user.id }}.png" class="discussion_content_item_comment_avatar">
+
+                {{ form_widget(form.content,{'attr':{'class':'textarea-bordered discussion_content_item_comment_input','placeholder':'Enter your comment here'}}) }}
+                {{ form_widget(form.send,{'attr':{'class':'button button-sm task_actions_item discussion_content_item_comment_action'}}) }}
+                {{ form_rest(form) }}
+
+            </div>
+            {{ form_end(form) }}
+            <h5 class="discussion_content_item_header">
+                Discussions ({{ msgs|length }})
+            </h5>
+            {% for msg in msgs %}
+                <div class="discussion_content_item">
+                    <img src="{{ asset('img/avatar/') }}{{ msg['id'] }}.png" class="discussion_content_item_comment_avatar">
+                    <div class="discussion_content_item_text">
+                        <label class="discussion_content_item_team"><a href="{{ path('view_team',{'slug':msg['slug']}) }}">{{ msg['username'] }}</a></label>
+                        <time class="discussion_content_item_time"><i class="fa fa-clock-o"></i> {{ msg['date']|date }}</time>
+                        <p class="discussion_content_item_text_comment">{{ msg['content'] | raw }}</p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="discussion_content_item_empty">
+                    No messages
+                </div>
+            {% endfor %}
+        </div>
+</div>
+    </div>
+</body>
+</html>

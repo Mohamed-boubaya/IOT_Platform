@@ -1,0 +1,94 @@
+{% extends "::template/default.html.twig" %}
+{% block title %}ScoreBoard{% endblock %}
+
+{% block body %}
+
+    <nav class="navigation">
+        <a href="{{ path('promo_list') }}" class="navigation_item">promos</a>
+        <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="navigation_item">{{ promo.name }}</a>
+
+        <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="navigation_item">Ranking</a>
+    </nav>
+    <h1 class="page_title">
+        {{ promo.name }}
+    </h1>
+
+    <div class="sign_in_container challenge_panel">
+        <nav class="challenge_panel_navigation row">
+            {% if app.user and (is_granted('ROLE_promo_PARTICIPATE', promo) or is_granted('ROLE_ADMIN')) %}
+                <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m6 s12">
+                    Description
+                </a>
+                <a href="{{ path('projet_list', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m6 s12">
+                    Projet
+                </a>
+                <a href="{{ path('promo_scoreboard', {slug : promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item sign_in_menu_item_selected l4 m6 s12">
+                    Studient
+                </a>
+
+            {% else %}
+                <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l6 m6 s12">
+                    Description
+                </a>
+                <a href="{{ path('promo_scoreboard', {slug : promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item sign_in_menu_item_selected l6 m6 s12">
+                    Studient
+                </a>
+            {% endif %}
+        </nav>
+        <div class="ranking">
+            <div class="ranking_filter">
+                <label class="ranking_filter_label">Filter by:</label>
+                <select class="inline-select">
+                    <option>Team</option>
+                    <option>Institute</option>
+                    <option>Country</option>
+                </select>
+                <input type="text" class="ranking_filter_input input-bordered" placeholder="Find by team">
+            </div>
+            <div class="items_state row">
+                <div class="l6 m6 s12 items_state_count">
+                    Total: {{ participations|length }} Participants
+                </div>
+                <div class="l6 m6 s12 items_state_pagination">
+                    Page 1 of 1
+                </div>
+            </div>
+            <table class="ranking_table" width="100%">
+                <thead class="ranking_table_head">
+                <tr class="ranking_table_head_line">
+                    <th class="ranking_table_head_line_item"><a href="#">Num</a></th>
+                    <th class="ranking_table_head_line_item"><a href="#">Studient</a></th>
+                   
+                    <th class="ranking_table_head_line_item"><a href="#">Institute</a></th>
+                    <th class="ranking_table_head_line_item"><a href="#">Country</a></th>
+                </tr>
+                </thead>
+                <tbody class="ranking_table_body">
+               
+                {% set rank = 1 %}
+                    {% for i ,participation in participations %}
+
+                        <tr class="ranking_table_body_line">
+                            <td class="ranking_table_body_line_item">
+                               {{rank}}
+                                        {% set rank = rank +1 %}
+                                      
+                               </td>
+                            <td class="ranking_table_body_line_item"><a href="{{ path('view_eleve',{'slug':participation.eleve.slug}) }}">{{ participation.eleve.username }}</a></td>
+                           
+                            <td class="ranking_table_body_line_item">{{ participation.eleve.organisation | upper }}</td>
+                            <td class="ranking_table_body_line_item"><img class="flag flag-{{ participation.eleve.country|lower }} ranking_table_body_line_item_flag"></td>
+                        </tr>
+                    {% else %}
+                        <tr class="ranking_table_body_line">
+                            <td class="ranking_table_body_line_item empty_table" colspan="5">No entries were found.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% block stylesheet %}
+        <link href='{{ asset('css/flags.css') }}' rel='stylesheet' type='text/css'>
+    {% endblock %}
+{% endblock %}

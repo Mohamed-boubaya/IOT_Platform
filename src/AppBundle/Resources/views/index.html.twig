@@ -1,0 +1,98 @@
+{% extends '::template/default.html.twig' %}
+{% block titleContainer %}
+    <title>IOT PLATFORM | ENIT </title>
+{% endblock %}
+
+{% block indexCover %}
+    <div class="index_cover">
+        <div class="index_cover_background">
+
+        </div>
+        <div class="index_cover_image">
+            <div class="index_content">
+            <span class="index_slogan1">
+                PLATFORM <span class="typed">IOT</span>
+            </span>
+            <span class="index_slogan2">
+                Everything that can be automated will be automated <span class="colored">automated</span>!
+            </span>
+                <a href="{{ path('fos_user_registration_register') }}" class="index_action button">Try now</a>
+            </div>
+         
+
+          
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+        <div class="index_presentation">
+            <p class="index_presentation_text1" align="center">
+                <b class="colored">IOT</b> is a system of interrelated<br> computing devices, mechanical and digital machines,
+                <b class="colored"> objects</b> that are provided with unique identifiers and the <br> ability to  transfer data over a network without requiring <br>human-to-human or human-to-computer interaction.<br/>
+         
+
+            </p>
+            <p class="index_presentation_text2" align="center">
+                Student will be create:
+            </p>
+            <div class="index_presentation_categories row">
+                <div class="index_presentation_categories_item l4 m6 s12">
+                    <div class="index_presentation_categories_item_icon">
+                        <i class="fa fa-wrench index_presentation_categories_item_iconi"></i>
+                    </div>
+                    <div class="index_presentation_categories_item_text">
+                        Embded System
+                    </div>
+                </div>
+                <div class="index_presentation_categories_item l4 m6 s12">
+                    <div class="index_presentation_categories_item_icon">
+                        <i class="fa fa-eye index_presentation_categories_item_iconi"></i>
+                    </div>
+                    <div class="index_presentation_categories_item_text">
+                        IOT Cloud
+                    </div>
+                </div>
+                <div class="index_presentation_categories_item l4 m6 s12">
+                    <div class="index_presentation_categories_item_icon">
+                        <i class="fa fa-signal index_presentation_categories_item_iconi"></i>
+                    </div>
+                    <div class="index_presentation_categories_item_text">
+                       IOT  Protocol
+                    </div>
+                </div>
+                <div class="index_presentation_categories_item l4 m6 s12">
+                    <div class="index_presentation_categories_item_icon">
+                        <i class="fa fa-cog index_presentation_categories_item_iconi"></i>
+                    </div>
+                    <div class="index_presentation_categories_item_text">
+                        System
+                    </div>
+                </div>
+                <div class="index_presentation_categories_item l4 m6 s12">
+                    <div class="index_presentation_categories_item_icon">
+                        <i class="fa fa-code index_presentation_categories_item_iconi"></i>
+                    </div>
+                    <div class="index_presentation_categories_item_text">
+                        Programming
+                    </div>
+                </div>
+                <div class="index_presentation_categories_item l4 m6 s12">
+                    <div class="index_presentation_categories_item_icon">
+                        <i class="fa fa-user-secret index_presentation_categories_item_iconi"></i>
+                    </div>
+                    <div class="index_presentation_categories_item_text">
+                       Smart Cities
+                    </div>
+                </div>
+            </div>
+            <div class="index_presentation_footer_text">
+                What are you waiting for? See what we do!
+            </div>
+            <a href="{{ path('fos_user_registration_register') }}" class="index_presentation_footer_action button">Start now</a>
+        </div>
+{% endblock %}
+{% block typedScript %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/headerIndex.js') }}"></script>
+{% endblock %}

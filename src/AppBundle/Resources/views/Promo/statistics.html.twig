@@ -1,0 +1,119 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ promo.name }}{% endblock %}
+{% block stylesheets %}
+    <style>
+    svg>text:last-child {
+     display: none;
+    }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    <script src="//code.highcharts.com/4.1.8/highcharts.js"></script>
+{% endblock %}
+{% block body %}
+    <nav class="navigation">
+        <a href="{{ path('promo_list') }}" class="navigation_item">promos</a>
+        <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="navigation_item">{{ promo.name }}</a>
+        <a href="{{ path('promo_statistics', {slug: promo.slug}) }}" class="navigation_item">Statistics</a>
+    </nav>
+    <h1 class="page_title">
+        {{ promo.name }}
+    </h1>
+
+    <div class="sign_in_container promo_panel">
+        <nav class="promo_panel_navigation row">
+            {% if app.user and (is_granted('ROLE_promo_PARTICIPATE', promo) or is_granted('ROLE_ADMIN')) %}
+           {# {% if promo.startAt|date > 'now'|date and not(is_granted('ROLE_ADMIN'))  %}
+                <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected promo_panel_navigation_item l12 m12 s12">
+                    Description
+                </a>
+                {% else %}#}
+                    <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected promo_panel_navigation_item l3 m6 s12">
+                        Description
+                    </a>
+                    <a href="{{ path('task_list', {'slug' : promo.slug}) }}" class="sign_in_menu_item promo_panel_navigation_item l3 m6 s12">
+                        Tasks
+                    </a>
+                    <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="sign_in_menu_item promo_panel_navigation_item l3 m6 s12">
+                        Ranking
+                    </a>
+                    <a href="{{ path('promo_submissions', {slug: promo.slug}) }}" class="sign_in_menu_item promo_panel_navigation_item l3 m6 s12">
+                        Submissions
+                    </a>
+                    {#{% endif %}#}
+            {% else %}
+            {% if promo.startAt|date <= date('now')  %}
+                <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected promo_panel_navigation_item l6 m6 s12">
+                    Description
+                </a>
+                {% else %}
+                    <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected promo_panel_navigation_item l12 m12 s12">
+                        Description
+                    </a>
+            {% endif %}
+                {% if promo.startAt|date <= date('now')  %}
+                    <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="sign_in_menu_item promo_panel_navigation_item l6 m6 s12">
+                        Ranking
+                    </a>
+                {% endif %}
+            {% endif %}
+        </nav>
+        <div class="promo_content">
+            <form metho="GET">
+                <div class="select sign_in_form_item_input l4 m6 s12" style="margin-right: 0px; float: right;">
+                    <select name="type" style="outline: none; border: 1px solid rgb(204, 204, 204); border-radius: 3px; padding-left: 5px; padding-right: 32px; width: calc(100% - 50px);">
+                        {% if (not app.request.query.has('type')) or (app.request.query.get('type')=='teams') %}
+                        <option value="teams" selected>
+                            Teams
+                        </option>
+                        <option value="activity">
+                            Tasks submissions
+                        </option>
+                        <option value="rate">
+                            Success rate
+                        </option>
+                        {% elseif app.request.query.get('type')=='activity' %}
+                        <option value="teams">
+                            Teams
+                        </option>
+                        <option value="activity" selected>
+                            Tasks submissions
+                         </option>
+                        <option value="rate">
+                            Success rate
+                        </option>
+                        {% elseif app.request.query.get('type')=='rate' %}
+                        <option value="teams">
+                            Teams
+                        </option>
+                        <option value="activity">
+                            Tasks submissions
+                        </option>
+                        <option value="rate" selected>
+                            Success rate
+                        </option>
+                        {% else %}
+                            <option value="teams" selected>
+                                Teams
+                            </option>
+                            <option value="activity">
+                                Tasks submissions
+                            </option>
+                            <option value="rate">
+                                Success rate
+                            </option>
+                        {% endif %}
+                    </select>
+
+                    <input type="submit" value="Go" class="button button-sm profile_actions_edit" style="width: 45px; height: 34px; padding: 0px; position: relative; top: 2px;">
+                </div>
+            </form>
+            <script type="text/javascript">
+                {{ chart(chart) }}
+            </script>
+
+            <div id="chart" style="margin: 0 auto"></div>
+        </div>
+    </div>
+{% endblock %}

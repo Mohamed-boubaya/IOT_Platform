@@ -1,0 +1,150 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ projet.name }}{% endblock %}
+
+{% block stylesheets %}
+  <style>
+    .submission_captcha img {
+    vertical-align: middle;
+        height: 40px;
+        width: 125px;
+        margin-right: 5px;
+    }
+    .submission_captcha img:hover {
+        cursor: pointer;
+    }
+  </style>
+
+  
+{% endblock %}
+
+{% block body %}
+
+        <nav class="navigation">
+            <a href="{{ path('promo_list') }}" class="navigation_item">Promos</a>
+            <a href="{{ path('projet_list',{'slug':promo.slug}) }}" class="navigation_item">{{ promo.name }}</a>
+            <a href="{{ path('projet_view', {'slug':promo.slug, slug_projet: projet.slug}) }}" class="navigation_item">{{ projet.name }}</a>
+        </nav>
+        <h1 class="page_title">
+            <a href="{{ path('projet_list', {'slug':promo.slug}) }}" class="page_title_return"><i class="fa fa-arrow-left"></i></a>
+            {{ projet.name }}
+        </h1>
+
+        <div class="sign_in_container challenge_panel">
+            <nav class="challenge_panel_navigation row">
+                <a href="{{ path('projet_view', {'slug':promo.slug, slug_projet: projet.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l6 m12 s12">
+                  Projet
+                </a>
+                <a href="{{ path('projet_discussions', {'slug':promo.slug, 'projet': projet.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l6 m6 s12">
+                    Discussions
+                </a>
+              
+            </nav>
+            
+
+            <style>
+        .item_empty:hover {
+            border: none;
+        }
+    </style>
+    <div class="row profile">
+      
+        <div class="l12 m8 s12 profile_details">
+        <br>
+              <h3 class="page_title">
+                    {{ projet.name }}
+              </h3>
+              <br>
+            
+
+
+
+
+            <div class="profile_details_sections">
+                <div class="profile_details_section item">
+                    <h3 class="profile_details_section_title"><i class="fa fa-trophy"></i> Abstract</h3>
+                   
+                    <div class="item_empty">
+                        {{ projet.abstract }}
+                      
+                    </div>
+                
+               
+                </div>
+
+                <div class="profile_details_section item">
+                    <h3 class="profile_details_section_title"><i class="fa fa-tasks"></i> Description</h3>
+                   
+                        <div class="item_empty">
+                          {{  projet.description }}
+                        </div>
+               
+                    <div class="profile_details_section_content">
+            
+                    </div>
+               
+                </div>
+
+                <div class="profile_details_section item">
+                    <h3 class="profile_details_section_title"><i class="fa fa-map-marker"></i> Key Word</h3>
+
+                    <div class="profile_details_section_content">
+                        <div class="profile_details_section_content_item">
+                            <span class="profile_details_section_content_item_value_time profile_details_section_content_item_value_time_subscription"><i class="fa fa-clock-o profile_details_section_content_item_value_icon"></i> {{ projet.keyword }} </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="challenge_content">
+                
+               
+                <div class="projet_description_more row">
+                    <dl class="task_description_more_left l6 m6 s12">
+                        
+
+
+                        <dt class="task_description_more_title">Category</dt>
+                        <dd class="task_description_more_content"><ul>{% for category in projet.categories %}<li>{{ category.name }}</li>{% endfor %}</ul></dd>
+
+
+                       
+                      
+                        <dt class="task_description_more_title">Start at</dt>
+                        <dd class="task_description_more_content">{{ projet.startAt | date }}</dd>
+                    </dl>
+                    <dl class="task_description_more_right l6 m6 s12">
+                        <dt class="task_description_more_title">   </dt>
+                        <dd class="task_description_more_content">  </dd>
+<br>
+                        <dt class="task_description_more_title">End at</dt>
+                        <dd class="task_description_more_content">{{ projet.endAt | date }}</dd>
+                    </dl>
+                </div>
+
+               
+            </div>
+
+<div class="challenge_actions">
+           
+             
+    
+                    {% if app.user is not null and is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('projet_edit', {'slug':promo.slug,'slug_projet':projet.slug}) }}" class="button button-sm challenge_actions_item profile_edit_action">Edit</a>
+                    {% endif %}
+              
+             </div>
+            </div>
+        </div>
+
+
+
+
+
+  
+    
+
+
+
+{% endblock %}

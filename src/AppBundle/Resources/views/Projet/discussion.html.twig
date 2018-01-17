@@ -1,0 +1,60 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ projet.name }}{% endblock %}
+
+{% block body %}
+
+        <nav class="navigation">
+            <a href="{{ path('promo_list') }}" class="navigation_item">promos</a>
+            <a href="{{ path('projet_list',{'slug':promo.slug}) }}" class="navigation_item">{{ promo.name }}</a>
+            <a href="{{ path('projet_view', {'slug':promo.slug, slug_projet: projet.slug}) }}" class="navigation_item">{{ projet.name }}</a>
+            <a href="{{ path('projet_discussions', {'slug':promo.slug, 'projet': projet.slug}) }}" class="navigation_item">Discussions</a>
+        </nav>
+        <h1 class="page_title">
+            <a href="{{ path('projet_list', {'slug':promo.slug}) }}" class="page_title_return"><i class="fa fa-arrow-left"></i></a>
+            {{ projet.name }}
+        </h1>
+
+        <div class="sign_in_container challenge_panel">
+            <nav class="promo_panel_navigation row">
+                <a href="{{ path('projet_view', {'slug':promo.slug, slug_projet: projet.slug}) }}" class="sign_in_menu_item  promo_panel_navigation_item l6 m12 s12">
+                    projet
+                </a>
+                <a href="{{ path('projet_discussions', {'slug':promo.slug, 'projet': projet.slug}) }}" class="sign_in_menu_item promo_panel_navigation_item l6 m6 s12 sign_in_menu_item_selected" >
+                    Discussions
+                </a>
+              
+            </nav>
+            <div class="discussion_content">
+                {{ form_start(form) }}
+                <div class="discussion_content_item_comment">
+                    <img src="{{ asset('img/avatar/') }}{{ app.user.id }}.png" class="discussion_content_item_comment_avatar">
+
+                    {{ form_widget(form.message,{'attr':{'class':'textarea-bordered discussion_content_item_comment_input','placeholder':'Enter your comment here'}}) }}
+                    {{ form_widget(form.comment,{'attr':{'class':'button button-sm projet_actions_item discussion_content_item_comment_action'}}) }}
+                    {{ form_rest(form) }}
+
+                </div>
+                {{ form_end(form) }}
+                <h5 class="discussion_content_item_header">
+                    Discussions ({{ discussions|length }})
+                </h5>
+                {% for discussion in discussions %}
+                    <div class="discussion_content_item">
+                        <img src="{{ asset('img/avatar/') }}{{ discussion.sender.id }}.png" class="discussion_content_item_comment_avatar">
+                        <div class="discussion_content_item_text">
+                            <label class="discussion_content_item_eleve"><a href="{{ path('view_eleve',{'slug':discussion.sender.slug}) }}">{{ discussion.sender.username }}</a></label>
+                            <time class="discussion_content_item_time"><i class="fa fa-clock-o"></i> {{ discussion.createdAt|date }}</time>
+                            <p class="discussion_content_item_text_comment">{{ discussion.message }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="discussion_content_item_empty">
+                        No messages
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+{% endblock %}

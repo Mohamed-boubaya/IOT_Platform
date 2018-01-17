@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+
+{% block container %}
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block toasts %}
+    <div class='toast_container'>
+        {% if app.request.hasPreviousSession %}
+        {% if app.session.flashBag.has('success') %}
+            {% for flash in app.session.flashBag.get('success') %}
+            <script>toast('{{ flash|trans }}', 0, 6000);</script>
+            {% endfor %}
+        {% endif %}
+        {% if app.session.flashBag.has('alert') %}
+            {% for flash in app.session.flashBag.get('alert') %}
+            <script>toast('{{ flash|trans }}', 1, 6000);</script>
+            {% endfor %}
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            {% for flash in app.session.flashBag.get('error') %}
+            <script>toast('{{ flash|trans }}', 1, 6000);</script>
+            {% endfor %}
+        {% endif %}
+        {% if app.session.flashBag.has('info') %}
+            {% for flash in app.session.flashBag.get('info') %}
+            <script>toast('{{ flash|trans }}', 2, 6000);</script>
+            {% endfor %}
+        {% endif %}
+        {% endif %}
+        {% if error is defined and error %}
+            <script>toast('{{ error|trans({}, 'FOSUserBundle') }}', 1, 6000);</script>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,86 @@
+    <h1 class="page_title">
+        My profile
+    </h1>
+    <style>
+        .item_empty:hover {
+            border: none;
+        }
+    </style>
+    <div class="row profile">
+        {% include "FOSUserBundle:Profile:profile_info.html.twig" with {'edit': '0'}  %}
+        <div class="l9 m8 s12 profile_details">
+            <div class="profile_details_header">
+              
+
+
+ {% if user.competitions and user.competitions|length>0%} 
+               
+             {% for competition in user.competitions %}
+
+                <div class="profile_details_header_item">
+
+
+
+                    <i class="fa fa-star profile_details_header_item_icon">
+                        <span class="profile_details_header_item_badge">
+{{ competition }}
+                        </span>
+                    </i>
+                    <p>{{ competition }}</p>
+                </div>
+                {% endfor %}
+                {% else %}
+
+                <i class="fa fa-star profile_details_header_item_icon">
+                        <span class="profile_details_header_item_badge">
+0
+                        </span>
+                    </i>
+                {% endif %}
+            </div>
+            <div class="profile_details_sections">
+                <div class="profile_details_section item">
+                    <h3 class="profile_details_section_title"><i class="fa fa-trophy"></i> PROMO12e </h3>
+                    {% if user.participations|length==0 %}
+                    <div class="item_empty">
+                      No history
+                    </div>
+                    {% else %}
+                        <div class="profile_details_section_content">
+                            {% for participation in user.participations %}
+                                <div class="profile_details_section_content_item">
+                                    <span class="profile_details_section_content_item_value_time"><i class="fa fa-clock-o profile_details_section_content_item_value_icon"></i> {{ participation.createdAt|date }}</span>
+                                    <a href="{{ path('promo_view',{'slug':participation.promo.slug}) }}" class="colored profile_details_section_content_item_value">{{ participation.promo.name }}</a> <small></small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="profile_details_section item">
+                    <h3 class="profile_details_section_title"><i class="fa fa-tasks"></i> PROJETS</h3>
+                   
+                        <div class="item_empty">
+                            No history
+                        </div>
+               
+                    <div class="profile_details_section_content">
+            
+                    </div>
+               
+                </div>
+
+                <div class="profile_details_section item">
+                    <h3 class="profile_details_section_title"><i class="fa fa-map-marker"></i> Inscription</h3>
+
+                    <div class="profile_details_section_content">
+                        <div class="profile_details_section_content_item">
+                            <span class="profile_details_section_content_item_value_time profile_details_section_content_item_value_time_subscription"><i class="fa fa-clock-o profile_details_section_content_item_value_icon"></i> Subscribed since {{ user.createdAt|date('F d, Y') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

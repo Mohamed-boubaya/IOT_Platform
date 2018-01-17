@@ -1,0 +1,54 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}AppBundle:Category:index{% endblock %}
+
+{% block body %}
+
+
+  {% if app.user is not null and is_granted('ROLE_ADMIN') %}                          
+<div class="tasks_actions_order l6 m12 s12">          
+  <nav class="navigation">
+
+    <i class="fa fa-plus" aria-hidden="true"></i>
+        <a href="{{path('category_new')}}" class="navigation_item">New Category</a>
+    </nav>
+</div>
+ {% endif %}
+<h1 class="page_title">
+ IOT Category
+</h1>
+ {%  for category in categories %}
+        <div class="item teams_item l4 m6 s12" href="profile.html">
+            <span class="flag flag-tn teams_item_flag"></span>
+           
+            <div class="teams_item_content">
+                <div class="teams_item_name truncate">
+                    <a >{{ category.name  }}</a>
+                </div>
+                <div class="teams_item_information">
+                    <div href="{{ path('category_delete',{slug: category.slug}) }}" class="teams_item_information_item">
+                        <i class="fa fa-trophy"></i> Delete
+                    </div>
+                    <div href="{{ path('category_edit',{slug: category.slug}) }}" class="teams_item_information_item">
+                        <i class="fa fa-flag"></i> Edit
+                    </div>
+                    
+                    <div class="teams_item_information_item">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+         {% else %}
+             <div class="item tasks_item item_empty">
+                 {% if (not app.request.query.has('filterValue')) or (app.request.query.get('filterValue')=="") %}
+                     No entries were found.
+                 {% else %}
+                     No entries were found for "{{ app.request.query.get('filterValue') }}".
+                 {% endif %}
+             </div>
+     {% endfor %}
+
+
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}STUDENTS{% endblock %}
+
+{% block body %}
+<h1 class="page_title">
+IOT Entreprises
+{% if app.user is not null and is_granted('ROLE_ADMIN') %}                          
+<div class="tasks_actions_order l6 m12 s12">          
+  <nav class="navigation">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+        <a href="{{ path('entreprise_new')}}" class="navigation_item">New Entreprise   </a>
+         
+
+    </nav>
+</div>
+ {% endif %}
+</h1>
+
+    <div class="items_state row">
+        <div class="items_state_count l6 m6 s12">
+            Total: {{ entreprises|length }} entreprises
+        </div>
+        <div class="items_state_pagination l6 m6 s12">
+            Page 1 of 1
+        </div>
+    </div>
+    <div class="teams row">
+     {% for entreprise in entreprises %}
+        <div class="item teams_item l4 m6 s12" href="profile.html">
+            <span class="flag flag-tn teams_item_flag"></span>
+            <img src="{{ asset('img/avatar/') }}{{ entreprise.id }}.png" class="item_avatar">
+            <div class="teams_item_content">
+                <div class="teams_item_name truncate">
+                    <a href="{{ path('entreprise_view',{'slug_entreprise':entreprise.slug}) }}">{{ entreprise.name }}</a>
+                </div>
+                <div class="teams_item_information">
+                    <div class="teams_item_information_item">
+                        <i class="fa fa-trophy"></i> {{ entreprise.applicationDomaine }}
+                    </div>
+                    <div class="teams_item_information_item">
+                        <i class="fa fa-phone"></i> {{ entreprise.PhoneNum }} 
+                    </div>
+                    <div class="teams_item_information_item">
+                        <i class="fa fa-user"></i>  {{ entreprise.email }}
+                    </div>
+                    <div class="teams_item_information_item">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+         {% else %}
+             <div class="item tasks_item item_empty">
+                 {% if (not app.request.query.has('filterValue')) or (app.request.query.get('filterValue')=="") %}
+                     No entries were found.
+                 {% else %}
+                     No entries were found for "{{ app.request.query.get('filterValue') }}".
+                 {% endif %}
+             </div>
+     {% endfor %}
+
+    </div>
+{% endblock %}

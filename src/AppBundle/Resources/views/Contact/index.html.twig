@@ -1,0 +1,74 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}Contacts List{% endblock %}
+
+{% block body %}
+    <h1 class="page_title">
+        Contacts ({{ contacts|length }})
+    </h1>
+    <div class="challenges">
+        <div class="tasks_actions row">
+            <div class="tasks_actions_filter l6 m12 s12">
+                <label class="ranking_filter_label">Filter by:</label>
+                <select class="inline-select" id="contact-navigation">
+                    {% if filter and filter=="new" %}
+                        <option value="{{ path('contacts',{'filter':'new'}) }}" selected="selected">Not seen yet</option>
+                        <option value="{{ path('contacts',{'filter':'old'}) }}">Old messages</option>
+                        <option value="{{ path('contacts',{'filter':'all'}) }}">All received messages</option>
+                    {% elseif filter and filter=="old" %}
+                        <option value="{{ path('contacts',{'filter':'new'}) }}">Not seen yet</option>
+                        <option value="{{ path('contacts',{'filter':'old'}) }}" selected="selected">Old messages</option>
+                        <option value="{{ path('contacts',{'filter':'all'}) }}">All received messages</option>
+                    {% else %}
+                        <option value="{{ path('contacts',{'filter':'new'}) }}">Not seen yet</option>
+                        <option value="{{ path('contacts',{'filter':'old'}) }}">Old messages</option>
+                        <option value="{{ path('contacts',{'filter':'all'}) }}" selected="selected">All received messages</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <div class="items_state row">
+            <div class="items_state_count l6 m6 s12">
+                Total: {{ contacts|length }} Messages
+            </div>
+            <div class="items_state_pagination l6 m6 s12">
+                Page 1 of 1
+            </div>
+        </div>
+
+
+
+        {% for contact in contacts %}
+            <a class="item challenges_item" href="{{ path('contact_view',{'id':contact.id}) }}">
+                <h3 class="challenges_item_title">
+                    {{ contact.sender }}
+                </h3>
+
+                <p class="challenges_item_description description">
+                    {{ contact.message | truncate(150, true) }}
+                </p>
+                <i class="description challenges_item_description_state">
+                {% if contact.viewed==1 %}
+                    New
+                {% endif %}
+                <time class="challenges_item_description_state_item"><i class="fa fa-clock-o"></i>
+                    {#Start at {{ challenge.startAt | date('d M Y') }}#}
+                    Sended in a {{ contact.createdAt | time_diff }}
+                </time>
+
+                </i>
+
+            </a>
+        {% else %}
+            <div class="item tasks_item item_empty">
+                No entries were found.
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        $("#contact-navigation").change(function()
+        {
+            document.location.href = $(this).val();
+        });
+    </script>
+{% endblock %}

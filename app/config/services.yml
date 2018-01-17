@@ -1,0 +1,42 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    post_voter:
+        class:      AppBundle\Security\PromoVoter
+        public:     false
+        tags:
+            - { name: security.voter }
+
+    twig.extension.text:
+         class: Twig_Extensions_Extension_Text
+         tags:
+             - { name: twig.extension }
+
+    twig.extension.date:
+         class: Twig_Extensions_Extension_Date
+         tags:
+             - { name: twig.extension }
+
+    app.form.registration:
+            class: AppBundle\Form\EleveRegistrationType
+            tags:
+                - { name: form.type, alias: appbundle_eleve_registration }
+
+    app.form.profile:
+                class: AppBundle\Form\EleveProfileType
+                tags:
+                    - { name: form.type, alias: appbundle_eleve_profile }
+
+    acme.twig.country_extension:
+            class: AppBundle\Services\CountryExtension
+            tags:
+                - { name: twig.extension }
+
+    
+

@@ -1,0 +1,44 @@
+<h1 class="page_title">
+    Edit profile
+</h1>
+<div class="row profile">
+    {% include "FOSUserBundle:Profile:profile_info.html.twig" with {'edit':'1'}  %}
+    <div class="sign_in_container l9 m8 s12 profile_details">
+        <div class="sign_in_header">
+            <h2>Profile edit</h2>
+        </div>
+        {{ form_start(form) }}
+        {{ form_errors(form,{'attr':{'class':'red','style':'font-weight: 200; font-size: 13px;'}}) }}
+        {{ form_widget(form._token) }}
+            <p class="sign_in_form_item">
+                {{ form_widget(form.username,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Student Name'}}) }}
+            </p>
+             <p class="sign_in_form_item">
+                {{ form_widget(form.fname,{'attr':{'class':'sign_in_form_item_input input','placeholder':'First name'}}) }}
+            </p>
+             <p class="sign_in_form_item">
+                {{ form_widget(form.name,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Name'}}) }}
+            </p>
+             <p class="sign_in_form_item">
+                {{ form_widget(form.linkdin,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Linkdin'}}) }}
+            </p>
+            <p class="sign_in_form_item">
+                {{ form_widget(form.email,{'attr':{'class':'sign_in_form_item_input input','placeholder':'E-mail'}}) }}
+            </p>
+            <p class="sign_in_form_item">
+                {{ form_widget(form.current_password,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Current password'}}) }}
+            </p>
+            <p class="sign_in_form_item">
+                {{ form_widget(form.organisation,{'attr':{'class':'sign_in_form_item_input input','placeholder':'School or organization'}}) }}
+            </p>
+           
+            <div class="select sign_in_form_item_input">
+                {{ form_widget(form.country) }}
+            </div>
+            <input type="submit" class="button button-sm profile_edit_action" value="Edit"/>
+            <a href="{{ path('fos_user_change_password') }}" class="button button-sm profile_edit_action ">Change password</a>
+            {{ form_rest(form) }}
+        {{ form_end(form) }}
+
+    </div>
+</div>

@@ -1,0 +1,43 @@
+{% block stylesheet %}
+    <link href='{{ asset('css/flags.css') }}' rel='stylesheet' type='text/css'>
+{% endblock %}
+<div class="sign_in_container challenge_panel profile_panel l3 m4 s12">
+    <span class="flag flag-{{ user.country|lower }} teams_item_flag"></span>
+    <a href="{{ path('view_eleve',{'slug':user.slug}) }}"><img src="{{ asset('img/avatar/') }}{{ user.id }}.png" class="item_avatar"></a>
+    <h3 class="profile_name"><a href="{{ path('view_eleve',{'slug':user.slug}) }}">{{ user.username }}</a></h3>
+    <div class="profile_informations">
+     <div class="profile_informations_item">
+            <i class="fa fa-user profile_informations_item_icon"></i>
+            <span class="profile_informations_item_value">{{ user.name }} {{user.fname }}</span>
+        </div>
+        <div class="profile_informations_item">
+            <i class="fa fa-map-marker profile_informations_item_icon"></i>
+            <span class="profile_informations_item_value">{{ user.country|country(app.request.locale) }}</span>
+        </div>
+       
+        <div class="profile_informations_item">
+            <i class="fa fa-building profile_informations_item_icon"></i>
+            <span class="profile_informations_item_value">{{ user.organisation }}</span>
+        </div>
+        <div class="profile_informations_item">
+            <i class="fa fa-envelope profile_informations_item_icon"></i>
+            <span class="profile_informations_item_value"><a href="mailto:{{ user.email }}">{{ user.email }}</a></span>
+        </div>
+          <div class="profile_informations_item">
+            <i class="fa fa-linkedin-square profile_informations_item_icon"></i>
+            <span class="profile_informations_item_value"><a href="{{ user.linkdin }}">{{ user.linkdin }}</a></span>
+        </div>
+
+    </div>
+    {% if app.user and app.user.id == user.id %}
+        <div class="profile_actions">
+            {% if edit is defined %}
+                {% if edit=='0' %}
+                    <a href="{{ path('fos_user_profile_edit') }}" class="button button-sm profile_actions_edit">Edit</a>
+                {% else %}
+                    <a href="{{ path('fos_user_profile_show') }}" class="button button-sm profile_actions_edit">Profile</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,19 @@
+{% extends '::template/loggin.html.twig' %}
+{% block title %}
+    Password recovery
+{% endblock %}
+{% block body %}
+    <div class="sign_in_container">
+        <div class="about_header_container" align="center">
+            <div class="about_header">
+                <img src="{{ asset('img/favicon.png') }}" alt="" class="header_title_img">
+                <h5 class="header_title_text">IOT PLATFORM <span class="colored">ENIT</span></h5>
+            </div>
+        </div>
+        <div class="sign_in_header">
+            <h1>Password recovery!</h1>
+        </div>
+        <p class="about_header_text" align="center">{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
+        </p>
+    </div>
+{% endblock body %}

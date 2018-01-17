@@ -1,0 +1,17 @@
+<div class="sign_in_container">
+    <div class="sign_in_header">
+        <h1>Password recovery</h1>
+    </div>
+
+    <p class="about_header_text">
+    To reset your password, enter the your  the email address you use to sign in to IOT PLATFORM ENIT.
+    </p>
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+
+    <p class="sign_in_form_item">
+           <input type="text" id="username" name="username" class="sign_in_form_item_input input" required="required" placeholder="E-mail" />
+        </p>
+        <input type="submit" value="Request" class="button button-sm sign_in_action" />
+    </form>
+
+</div>

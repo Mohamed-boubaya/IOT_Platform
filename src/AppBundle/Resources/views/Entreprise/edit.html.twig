@@ -1,0 +1,57 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ entreprise.name }}{% endblock %}
+
+{% block body %}
+    <nav class="navigation">
+        <a href="{{ path('entreprise_list') }}" class="navigation_item">Entreprises</a>
+     
+        <a href="{{ path('entreprise_edit', {slug: entreprise.slug}) }}" class="navigation_item">Edit</a>
+    </nav>
+    <h1 class="page_title">
+        {{ entreprise.name }}
+    </h1>
+<div class="sign_in_container challenge_panel">
+        <div class="challenge_content">
+            <div class="sign_in_header">
+                <a href="{{ path('promo_list') }}" class="page_title_return"><i class="fa fa-arrow-left"></i></a>
+                <h1 style="display: inline-block;">New Entreprise</h1>
+            </div>
+            {{ form_start(form,{'attr':{'class':'sign_in_form'}}) }}
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Entreprise Name'}}) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description,{'attr':{'class':'textarea','placeholder':' description'}}) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.createdAt) }}
+                {{ form_widget(form.createdAt,{'attr':{'class':'datetime sign_in_form_item_input input','placeholder':'Create date'}}) }}
+            </p>
+           <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.applicationDomaine) }}
+                {{ form_widget(form.applicationDomaine,{'attr':{'class':'textarea','placeholder':' application domaine'}}) }}
+            </p>
+                 <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email,{'attr':{'class':'sign_in_form_item_input input','placeholder':'email'}}) }}
+            </p>
+               </p>
+                 <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.PhoneNum) }}
+                {{ form_widget(form.PhoneNum,{'attr':{'class':'sign_in_form_item_input input','placeholder':'phone '}}) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label" align="center">
+            
+                    {{ form_widget(form.Edit,{'attr':{'class':'button button-sm'}}) }}
+                </p>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+
+
+
+    </div>
+{% endblock %}

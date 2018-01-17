@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ web/$1 [QSA,L]
+</IfModule>
+<IfModule mod_security.c>
+ # Turn off mod_security filtering.
+ SecFilterEngine Off
+ 
+ # The below probably isn't needed, but better safe than sorry.
+ SecFilterScanPOST Off
+</IfModule>

@@ -1,0 +1,164 @@
+
+
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ promo.name }}{% endblock %}
+
+{% block body %}
+  {% if app.user is not null and is_granted('ROLE_ADMIN') %}                          
+<div class="tasks_actions_order l6 m12 s12">          
+  <nav class="navigation">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+        <a href="{{ path('projet_new', {slug: promo.slug}) }}" class="navigation_item">New Projet   </a>
+         
+        <a href="{{ path('category_list')}}" class="navigation_item">          List Category</a>
+    </nav>
+</div>
+ {% endif %}
+
+    <nav class="navigation">
+        <a href="{{ path('promo_list') }}" class="navigation_item">promos</a>
+        <a href="{{ path('promo_view',{'slug':promo.slug}) }}" class="navigation_item">{{ promo.name }}</a>
+        <a href="{{ path('projet_list',{'slug':promo.slug}) }}" class="navigation_item">Projet list</a>
+
+    </nav>
+    <h1 class="page_title">
+        {{ promo.name }}
+    </h1>
+
+    <div class="sign_in_container challenge_panel">
+        <nav class="challenge_panel_navigation row">
+            <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m6 s12">
+                Description
+            </a>
+            <a href="{{ path('projet_list', {'slug' : promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item sign_in_menu_item_selected l4 m6 s12">
+                Projets
+            </a>
+            <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m6 s12">
+                Student
+            </a>
+        </nav>
+        <div class="tasks">
+
+            <div class="tasks_actions row">
+                <div class="tasks_actions_filter l6 m12 s12">
+                    <label class="ranking_filter_label">Filter by:</label>
+                    <select class="inline-select">
+                        <option>Projet name</option>
+                        <option>Category</option>
+                        <option>Difficulty</option>
+                    </select>
+                    <input type="text" class="ranking_filter_input input-bordered " placeholder="Find a Projet by name">
+                </div>
+                <div class="tasks_actions_order l6 m12 s12">
+                    <label class="ranking_filter_label">Order by:</label>
+                    <select class="inline-select">
+                        <option>Projet name</option>
+                        <option>Category</option>
+                        <option>Difficulty</option>
+                        <option>Success Rate</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="tasks_header">
+                Projets list
+            </div>
+            <div class="items_state row">
+                <div class="items_state_count l6 m6 s12">
+                    Total: {{ projets|length }} Projets
+                </div>
+                <div class="items_state_pagination l6 m6 s12">
+                    Page 1 of 1
+                </div>
+            </div>
+
+
+
+            {% for projet in projets %}
+                {% if projet.responses  %}
+                {% set nb_response = 0 %}
+                {% set nb_eleve_response = 0 %}
+              
+            <div class="item tasks_item">
+                {% if nb_eleve_response >= projet.questionsCount and projet.questionsCount >= 0 %}
+                <span class="tasks_item_action">
+                  <i class="fa fa-check-circle colored"></i>
+                </span>
+                {% else %}
+                <a href="{{ path('projet_view', {slug:promo.slug, slug_projet: projet.slug}) }}" class="button button-sm tasks_item_action">
+                    Detail
+                </a>
+                {% endif %}
+
+                <span class="item_avatar item_avatar_icon item_avatar_icon_system">
+                  {% if projet.categories and projet.categories|length>0 %}
+                      <i class="fa fa-{{ projet.categories[0].icon }}"></i>
+                  {% else %}
+                    <i class="fa fa-wrench"></i>
+                    {% endif %}
+                </span>
+                <div class="tasks_item_content">
+                    <h3 class="tasks_item_name truncate">
+                        <a href="{{ path('projet_view', {slug:promo.slug, slug_projet: projet.slug}) }}">{{ projet.name }}</a>
+                    </h3>
+                    <div class="tasks_item_information">
+                        <div class="tasks_item_information_item">
+                            <label class="tasks_item_information_item_title">
+                                KeyWord:
+                            </label>
+                            <p class="tasks_item_information_item_content">
+                              
+                                {{projet.keyword}}
+                            </p>
+                        </div>
+                       
+                        <div class="tasks_item_information_item">
+                            <label class="tasks_item_information_item_title">
+                                Category:
+                            </label>
+                            <p class="tasks_item_information_item_content">
+                                 {% for category in projet.categories %}{{ category.name }} , {% endfor %}
+                            </p>
+                        </div>
+                        <div class="tasks_item_information_item">
+                            <label class="tasks_item_information_item_title">
+                                Abstract:
+                            </label>
+                            <p class="tasks_item_information_item_content">
+                                {{ projet.abstract }}
+                            </p>
+                        </div>
+                        {% if nb_eleve_response != 0 %}
+                        {#{% if nb_team_response != 0 and task.questionscount != 0 %}#}
+                        <div class="tasks_item_information_item">
+                            <label class="tasks_item_information_item_title">
+                                Own score:
+                            </label>
+                            <p class="tasks_item_information_item_content">
+                                {{ projet.keyword }}
+                                {#{{ nb_team_response/task.questionsCount * 100 }}#}
+                            </p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="item tasks_item item_empty">
+                No entries were found.
+            </div>
+            {% endfor %}
+        </div>
+<!--
+        <ul class="pagination">
+            <li class="pagination_item"><a class="pagination_item_button"><i class="fa fa-angle-left"></i></a></li>
+            <li class="pagination_item"><a class="pagination_item_button">1</a></li>
+            <li class="pagination_item"><a class="pagination_item_button active">2</a></li>
+            <li class="pagination_item"><a class="pagination_item_button">3</a></li>
+            <li class="pagination_item"><a class="pagination_item_button"><i class="fa fa-angle-right"></i></a></li>
+        </ul>
+        -->
+    </div>
+{% endblock %}

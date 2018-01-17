@@ -1,0 +1,39 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}AppBundle:Category:new{% endblock %}
+
+{% block body %}
+    
+    <div class="sign_in_container challenge_panel">
+        <nav class="challenge_panel_navigation row">
+           
+       
+         
+        </nav>
+        <div class="challenge_content">
+            <div class="sign_in_header">
+               
+                <h1 style="display: inline-block;">Add your category</h1>
+            </div>
+            {{ form_start(form,{'attr':{'class':'sign_in_form'}}) }}
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Category name'}}) }}
+            </p>
+           
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.icon) }}
+                {{ form_widget(form.icon,{'attr':{'class':'sign_in_form_item_input input','placeholder':'Category icon'}}) }}
+            </p>
+        <p class="sign_in_form_item sign_in_form_item_with_label" align="center">
+                {{ form_widget(form.add,{'attr':{'class':'button button-sm'}}) }}
+            </p>
+           
+ 
+           {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
+{% endblock %}

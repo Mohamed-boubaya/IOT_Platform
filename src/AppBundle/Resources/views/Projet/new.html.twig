@@ -1,0 +1,95 @@
+{% extends "::template/default.html.twig" %}
+
+{% block title %}{{ promo.name }}{% endblock %}
+
+{% block body %}
+
+    <nav class="navigation">
+        <a href="{{ path('promo_list') }}" class="navigation_item">promos</a>
+        <a href="{{ path('promo_list',{'slug':promo.slug}) }}" class="navigation_item">{{ promo.name }}</a>
+        <a href="{{ path('projet_new', {'slug':promo.slug}) }}" class="navigation_item">New Project</a>
+    </nav>
+    <h1 class="page_title">
+        <a href="{{ path('promo_list', {'slug':promo.slug}) }}" class="page_title_return"><i class="fa fa-arrow-left"></i></a>
+        {{ promo.name }}
+    </h1>
+
+    <div class="sign_in_container challenge_panel">
+        <nav class="promo_panel_navigation row">
+            {% if app.user and (is_granted('ROLE_promo_PARTICIPATE', promo) or is_granted('ROLE_ADMIN')) %}
+                {% if promo.startAt|date > date('now')  %}
+                    <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l12 m12 s12">
+                        Description
+                    </a>
+                {% else %}
+                    <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l4 m6 s12">
+                        Description
+                    </a>
+                    <a href="{{ path('promo_list', {'slug' : promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m6 s12">
+                       Promos
+                    </a>
+                    <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l4 m6 s12">
+                      Students
+                    </a>
+                   
+                {% endif %}
+            {% else %}
+                {% if promo.startAt|date <= date('now')  %}
+                    <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l6 m6 s12">
+                        Description
+                    </a>
+                {% else %}
+                    <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="sign_in_menu_item sign_in_menu_item_selected challenge_panel_navigation_item l12 m12 s12">
+                        Description
+                    </a>
+                {% endif %}
+                {% if promo.startAt|date <= date('now')  %}
+                    <a href="{{ path('promo_scoreboard', {slug: promo.slug}) }}" class="sign_in_menu_item challenge_panel_navigation_item l6 m6 s12">
+                        Ranking
+                    </a>
+                {% endif %}
+            {% endif %}
+        </nav>
+        <div class="challenge_content">
+            <div class="sign_in_header">
+                <a href="{{ path('promo_view', {slug: promo.slug}) }}" class="page_title_return"><i class="fa fa-arrow-left"></i></a>
+                <h1 style="display: inline-block;">New projet</h1>
+            </div>
+            {{ form_start(form,{'attr':{'class':'sign_in_form'}}) }}
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name,{'attr':{'class':'sign_in_form_item_input input','placeholder':'project title'}}) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description,{'attr':{'class':'textarea','placeholder':'project description'}}) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.keyword) }}
+                {{ form_widget(form.keyword,{'attr':{'class':'sign_in_form_item_input input','placeholder':'project keyword'}}) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.startAt) }}
+                {{ form_widget(form.startAt,{'attr':{'class':'datetime sign_in_form_item_input input','placeholder':'Start date'}}) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.endAt) }}
+                {{ form_widget(form.endAt,{'attr':{'class':'datetime sign_in_form_item_input input','placeholder':'End date'}}) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.categories) }}
+                {{ form_widget(form.categories) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label">
+                {{ form_label(form.abstract) }}
+                {{ form_widget(form.abstract,{'attr':{'class':'textarea','placeholder':'Abstract'}}) }}
+            </p>
+            <p class="sign_in_form_item sign_in_form_item_with_label" align="center">
+                {{ form_widget(form.add,{'attr':{'class':'button button-sm'}}) }}
+            </p>
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}
